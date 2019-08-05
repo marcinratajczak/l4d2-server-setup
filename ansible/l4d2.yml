@@ -72,6 +72,10 @@
       ufw: rule=allow port=27015 proto=any
       ignore_errors: True
 
+    - name: UFW allow SteamCMD
+      ufw: rule=allow port=27020 proto=any
+      ignore_errors: True
+
     - name: UFW enable
       ufw: state=enabled
       ignore_errors: True
@@ -92,3 +96,28 @@
       delay: 1
       ignore_errors: yes
       register: apt_upgraded
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Sets Steam folder
+      file: path=/home/ubuntu/Steam owner=ubuntu group=ubuntu state=directory mode=0775
+      ignore_errors: True
+
+    - name: Download SteamCMD
+      get_url:
+        url: http://media.steampowered.com/installer/steamcmd_linux.tar.gz
+        dest: /home/ubuntu/Steam/steamcmd_linux.tar.gz
+        mode: '0664'
+
+    - name: Unarchive SteamCMD
+      unarchive:
+        src: /home/ubuntu/Steam/steamcmd_linux.tar.gz
+        dest: /home/ubuntu/Steam
+        remote_src: yes
+
+    - name: Delete file steamcmd_linux.tar.gz
+      file:
+        path: /home/ubuntu/Steam/steamcmd_linux.tar.gz
+        state: absent
