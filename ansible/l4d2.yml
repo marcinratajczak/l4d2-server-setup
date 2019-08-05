@@ -47,6 +47,7 @@
           - libc6-i386
           - libcurl4-gnutls-dev:i386
           - screen
+          - python-pip
 
 - hosts: all
   become: yes
@@ -121,3 +122,44 @@
       file:
         path: /home/ubuntu/Steam/steamcmd_linux.tar.gz
         state: absent
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  become_user: ubuntu
+  tasks:
+    - name: Create game script for Left 4 Dead 2
+      template: src=static_files/l4d2.j2 dest=/home/ubuntu/Steam/l4d2.txt owner=ubuntu group=ubuntu mode=0644
+  
+    - name: Run the SteamCMD setup for Left 4 Dead 2
+      shell: './steamcmd.sh +runscript /home/ubuntu/Steam/l4d2.txt'
+      args:
+        chdir: /home/ubuntu/Steam/
+      ignore_errors: True
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Upload server.cfg
+      copy: src=static_files/server.cfg dest=/home/ubuntu//Steam/L4D2-server/left4dead2/cfg/server.cfg owner=ubuntu group=ubuntu mode=0664
+      ignore_errors: True
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Upload start_L4D2.sh
+      copy: src=static_files/start_L4D2.sh dest=/home/ubuntu/Steam/L4D2-server/start_L4D2.sh owner=ubuntu group=ubuntu mode=0775
+      ignore_errors: True
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  become_user: ubuntu
+  tasks:
+    - name: Run Left 4 Dead 2 Server
+      shell: './start_L4D2.sh'
+      args:
+        chdir: /home/ubuntu/Steam/L4D2-server/
+      ignore_errors: True

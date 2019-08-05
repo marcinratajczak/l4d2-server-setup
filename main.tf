@@ -137,7 +137,6 @@ resource "aws_instance" "l4d2" {
   instance_type          = "${var.aws_ec2_type}"
   key_name               = "${var.aws_ec2_key}"
   vpc_security_group_ids = ["${aws_security_group.l4d2.id}"]
-  user_data = "${file("userdata.sh")}"
   tags = {
     Name = "l4d2"
   }
