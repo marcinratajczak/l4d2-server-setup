@@ -1,0 +1,94 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Install aptitude
+    apt: pkg=aptitude state=present update_cache=true
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Configure the package manager to include accommodations for i386 architecture
+      shell: dpkg --add-architecture i386
+      ignore_errors: True
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: apt update
+      apt: update-cache=yes cache_valid_time=3600
+      retries: 3
+      delay: 1
+      ignore_errors: yes
+      register: apt_updated
+
+    - name: apt safe upgrade
+      apt: upgrade=safe
+      delay: 1
+      ignore_errors: yes
+      register: apt_upgraded
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Install requisite 32-bit libraries
+      apt:
+        name:  "{{ packages }}"
+        state: present
+        update_cache:  yes
+      vars:
+        packages:
+          - lib32gcc1
+          - lib32stdc++6
+          - libc6-i386
+          - libcurl4-gnutls-dev:i386
+          - screen
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: UFW allow SSH
+      ufw: rule=allow port=22 proto=any
+      ignore_errors: True
+
+    - name: UFW allow SteamCMD
+      ufw: rule=allow port=4380 proto=any
+      ignore_errors: True
+
+    - name: UFW allow SteamCMD
+      ufw: rule=allow port=10999 proto=any
+      ignore_errors: True
+
+    - name: UFW allow SteamCMD
+      ufw: rule=allow port=7777 proto=any
+      ignore_errors: True
+
+    - name: UFW allow SteamCMD
+      ufw: rule=allow port=27015 proto=any
+      ignore_errors: True
+
+    - name: UFW enable
+      ufw: state=enabled
+      ignore_errors: True
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: apt update
+      apt: update-cache=yes cache_valid_time=3600
+      retries: 3
+      delay: 1
+      ignore_errors: yes
+      register: apt_updated
+
+    - name: apt safe upgrade
+      apt: upgrade=safe
+      delay: 1
+      ignore_errors: yes
+      register: apt_upgraded
