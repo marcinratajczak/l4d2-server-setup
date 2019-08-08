@@ -14,6 +14,7 @@ variable "aws_profile" {
   default     = "terraform"
 }
 
+# https://cloud-images.ubuntu.com/locator/ec2/
 variable "aws_ec2_ami" {
   description = "The AWS AMI to use."
   default     = "ami-06358f49b5839867c"
