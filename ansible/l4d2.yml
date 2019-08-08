@@ -140,7 +140,7 @@
 
 - hosts: all
   vars:
-    hostname: "Newer Win Server"
+    hostname: "Newer Win"
     rcon_password: "{{ lookup('password', '/dev/null length=20 chars=ascii_letters') }}"
     sv_contact: "nw@email.com"
   become: yes
