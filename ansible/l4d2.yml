@@ -48,6 +48,7 @@
           - libcurl4-gnutls-dev:i386
           - screen
           - python-pip
+          - python-apt
 
 - hosts: all
   become: yes
@@ -138,11 +139,15 @@
       ignore_errors: True
 
 - hosts: all
+  vars:
+    hostname: "Newer Win Server"
+    rcon_password: "{{ lookup('password', '/dev/null length=20 chars=ascii_letters') }}"
+    sv_contact: "nw@email.com"
   become: yes
   become_method: sudo
   tasks:
     - name: Upload server.cfg
-      copy: src=static_files/server.cfg dest=/home/ubuntu//Steam/L4D2-server/left4dead2/cfg/server.cfg owner=ubuntu group=ubuntu mode=0664
+      template: src=static_files/server.j2 dest=/home/ubuntu/Steam/L4D2-server/left4dead2/cfg/server.cfg owner=ubuntu group=ubuntu mode=0644
       ignore_errors: True
 
 - hosts: all

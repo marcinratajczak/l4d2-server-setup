@@ -1,9 +1,9 @@
 // You should change these
-hostname "Never Win Server"
-rcon_password bAWURQ69zy9gSr79
+hostname "{{ hostname | default(NW) }}"
+rcon_password {{ rcon_password | default(bAWURQ69zy9gSr79) }}
 
 // This states how players should contact you.  Use your email or website
-sv_contact your@email.com
+sv_contact {{ sv_contact | default("your@email.com") }}
 
 // Number of rounds to play (only versus)
 mp_roundlimit 2
@@ -15,15 +15,6 @@ sv_tags ""
 // STEAM GROUP
 sv_steamgroup GROUPIDHERE
 
-//MASTERSERVERS
-
-//FRIENDLY FIRE
-sm_cvar survivor_friendly_fire_factor_easy 0
-sm_cvar survivor_friendly_fire_factor_expert 0
-sm_cvar survivor_friendly_fire_factor_hard 1
-sm_cvar survivor_friendly_fire_factor_normal 1
-
-
 // CHEAT/CONFIG
 sv_lan 0
 sv_cheats 0
@@ -31,20 +22,11 @@ sv_consistency 1
 sv_maxcmdrate 101
 sv_maxrate 30000
 
-sm_cvar sv_disable_glow_survivors 0
-sm_cvar sv_disable_glow_faritems 0
-sm_cvar sv_rescue_disabled 0
-
-//ADVERTRISMENTS
-sm_advertisements_enabled 1
-sm_advertisements_interval 480
-
 //MOTD
 motd_enabled 1
 
 //GAME MODE
 sv_gametypes "coop, versus, mutation"
-sm_cvar mp_gamemode coop
 
 //DIFFICULTY
 z_difficulty Easy
@@ -53,15 +35,7 @@ z_difficulty Easy
 sv_allow_lobby_connect_only 0
 
 //BEBOP
-l4d_maxplayers "8"
-sv_maxplayers "8"
-sm_cvar l4d_maxplayers "8"
 sv_visiblemaxplayers "-1"
-sm_cvar l4d_survivor_limit "8"
-sm_cvar sv_removehumanlimit "1"
-
-//PIPE-BOMB DURATION
-sm_cvar pipe_bomb_timer_duration "10"
 
 /////////////////////////
 //Game Settings
@@ -110,7 +84,6 @@ writeid                        //Wrties a list of permanently-banned user IDs to
 /////////////////////////
 //Network Tweaks - Increase network performance
 ////////////
-rate 10000                     //default 10000; Max bytes/sec the host can recieve data
 sv_minrate 15000               //default "5000"; Min bandwidth rate allowed on server, 0 = unlimited
 sv_maxrate 30000               //default "0";  Max bandwidth rate allowed on server, 0 = unlimited
 sv_mincmdrate 20               //default 0; This sets the minimum value for cl_cmdrate. 0 = unlimited [cevo=67]
