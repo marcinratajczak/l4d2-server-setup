@@ -157,6 +157,6 @@ resource "aws_instance" "l4d2" {
     }
   }
   provisioner "local-exec" {
-    command = "ansible-playbook -i '${aws_instance.l4d2.public_ip},' -u '${var.ssh_user}' --private-key ${var.private_key_path} ./ansible/l4d2.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
+    command = "ansible-playbook -i '${aws_instance.l4d2.public_ip},' -u '${var.ssh_user}' --private-key ${var.private_key_path} ../ansible/l4d2.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
   }
 }
