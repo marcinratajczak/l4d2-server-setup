@@ -1,4 +1,4 @@
-# AWS
+# GCP
 variable "gcp_region" {
   description = "The GCP region to create things in"
   default     = "europe-west4"
@@ -12,6 +12,22 @@ variable "gcp_credentials_file" {
 variable "gcp_project" {
   description = "The GCP project to use."
   default     = "ageless-fire-244620"
+}
+
+variable "gcp_machine_type" {
+  description = "The GCP machine type to use."
+  default     = "n2-standard-2"
+}
+
+variable "gcp_zone" {
+  description = "The GCP zone to use."
+  default     = "europe-west4-a"
+}
+
+# https://cloud.google.com/compute/docs/images
+variable "gcp_image" {
+  description = "The GCP image to use."
+  default     = "gce-uefi-images/ubuntu-1804-lts"
 }
 
 # SSH
