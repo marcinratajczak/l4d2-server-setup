@@ -53,13 +53,13 @@ resource "random_id" "instance_id" {
 // A single Google Cloud Engine instance
 resource "google_compute_instance" "default" {
  name         = "l4d2-vm-${random_id.instance_id.hex}"
- machine_type = "n2-standard-2"
- zone         = "europe-west4-a"
+ machine_type = "${var.gcp_machine_type}"
+ zone         = "${var.gcp_zone}"
  tags         = ["l4d2","ssh"]
 
  boot_disk {
    initialize_params {
-     image = "gce-uefi-images/ubuntu-1804-lts"
+     image = "${var.gcp_image}"
      size = "100"
    }
  }
