@@ -45,6 +45,19 @@ resource "google_compute_firewall" "default" {
   target_tags   = ["l4d2"]
 }
 
+resource "google_compute_firewall" "default-deny" {
+  name    = "l4d2-firewall-deny"
+  network = "default"
+  priority = "2000"
+
+  deny {
+    protocol = "all"
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["l4d2"]
+}
+
 // Terraform plugin for creating random ids
 resource "random_id" "instance_id" {
  byte_length = 8
