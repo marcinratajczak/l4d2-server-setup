@@ -102,40 +102,44 @@
 - hosts: all
   become: yes
   become_method: sudo
+  vars:
+    ssh_user: ubuntu
   tasks:
     - name: Sets Steam folder
-      file: path=/home/ubuntu/Steam owner=ubuntu group=ubuntu state=directory mode=0775
+      file: path=/home/{{ssh_user}}/Steam owner={{ssh_user}} group={{ssh_user}} state=directory mode=0775
       ignore_errors: True
 
     - name: Download SteamCMD
       get_url:
         url: http://media.steampowered.com/installer/steamcmd_linux.tar.gz
-        dest: /home/ubuntu/Steam/steamcmd_linux.tar.gz
+        dest: /home/{{ssh_user}}/Steam/steamcmd_linux.tar.gz
         mode: '0664'
 
     - name: Unarchive SteamCMD
       unarchive:
-        src: /home/ubuntu/Steam/steamcmd_linux.tar.gz
-        dest: /home/ubuntu/Steam
+        src: /home/{{ssh_user}}/Steam/steamcmd_linux.tar.gz
+        dest: /home/{{ssh_user}}/Steam
         remote_src: yes
 
     - name: Delete file steamcmd_linux.tar.gz
       file:
-        path: /home/ubuntu/Steam/steamcmd_linux.tar.gz
+        path: /home/{{ssh_user}}/Steam/steamcmd_linux.tar.gz
         state: absent
 
 - hosts: all
+  vars:
+    ssh_user: ubuntu
   become: yes
   become_method: sudo
-  become_user: ubuntu
+  become_user: "{{ssh_user}}"
   tasks:
     - name: Create game script for Left 4 Dead 2
-      template: src=static_files/l4d2.j2 dest=/home/ubuntu/Steam/l4d2.txt owner=ubuntu group=ubuntu mode=0644
+      template: src=static_files/l4d2.j2 dest=/home/{{ssh_user}}/Steam/l4d2.txt owner={{ssh_user}} group={{ssh_user}} mode=0644
   
     - name: Run the SteamCMD setup for Left 4 Dead 2
-      shell: './steamcmd.sh +runscript /home/ubuntu/Steam/l4d2.txt'
+      shell: './steamcmd.sh +runscript /home/{{ssh_user}}/Steam/l4d2.txt'
       args:
-        chdir: /home/ubuntu/Steam/
+        chdir: /home/{{ssh_user}}/Steam/
       ignore_errors: True
 
 - hosts: all
@@ -143,28 +147,33 @@
     hostname: "Newer Win"
     rcon_password: "{{ lookup('password', '/dev/null length=20 chars=ascii_letters') }}"
     sv_contact: "nw@email.com"
+    ssh_user: ubuntu
   become: yes
   become_method: sudo
   tasks:
     - name: Upload server.cfg
-      template: src=static_files/server.j2 dest=/home/ubuntu/Steam/L4D2-server/left4dead2/cfg/server.cfg owner=ubuntu group=ubuntu mode=0644
+      template: src=static_files/server.j2 dest=/home/{{ssh_user}}/Steam/L4D2-server/left4dead2/cfg/server.cfg owner={{ssh_user}} group={{ssh_user}} mode=0644
       ignore_errors: True
 
 - hosts: all
   become: yes
   become_method: sudo
+  vars:
+    ssh_user: ubuntu
   tasks:
     - name: Upload start_L4D2.sh
-      copy: src=static_files/start_L4D2.sh dest=/home/ubuntu/Steam/L4D2-server/start_L4D2.sh owner=ubuntu group=ubuntu mode=0775
+      copy: src=static_files/start_L4D2.sh dest=/home/{{ssh_user}}/Steam/L4D2-server/start_L4D2.sh owner={{ssh_user}} group={{ssh_user}} mode=0775
       ignore_errors: True
 
 - hosts: all
+  vars:
+    ssh_user: ubuntu
   become: yes
   become_method: sudo
-  become_user: ubuntu
+  become_user: "{{ssh_user}}"
   tasks:
     - name: Run Left 4 Dead 2 Server
       shell: './start_L4D2.sh'
       args:
-        chdir: /home/ubuntu/Steam/L4D2-server/
+        chdir: /home/{{ssh_user}}/Steam/L4D2-server/
       ignore_errors: True
