@@ -31,6 +31,22 @@
       ignore_errors: yes
       register: apt_upgraded
 
+    - name: check if reboot is required
+      stat: path=/var/run/reboot-required
+      register: rb
+
+    - name: Reboot if necessary
+      reboot:
+        reboot_timeout: 3600
+      ignore_errors: true
+      when: rb.stat.exists
+
+    - name: Delete reboot-required file 
+      file:
+        path: /var/run/reboot-required
+        state: absent
+      ignore_errors: true
+
 - hosts: all
   become: yes
   become_method: sudo
@@ -99,6 +115,11 @@
       ignore_errors: yes
       register: apt_upgraded
 
+    - name: Reboot for clean start
+      reboot:
+        reboot_timeout: 3600
+      ignore_errors: true
+
 - hosts: all
   become: yes
   become_method: sudo
@@ -163,6 +184,14 @@
   tasks:
     - name: Upload start_L4D2.sh
       copy: src=static_files/start_L4D2.sh dest=/home/{{ssh_user}}/Steam/L4D2-server/start_L4D2.sh owner={{ssh_user}} group={{ssh_user}} mode=0775
+      ignore_errors: True
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Give it a break
+      shell: sleep 10
       ignore_errors: True
 
 - hosts: all
