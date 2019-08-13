@@ -2,7 +2,7 @@
 
 `l4d2-server-setup` allows you to quickly create your own server Left 4 Dead 2 from scratch.
 
-Currently supported following cloud computing platforms:
+Currently supports following cloud computing platforms:
 
 - Amazon Web Services (AWS)
 - Google Cloud Platform
