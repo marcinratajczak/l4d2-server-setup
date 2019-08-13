@@ -207,14 +207,6 @@
       ignore_errors: True
 
 - hosts: all
-  become: yes
-  become_method: sudo
-  tasks:
-    - name: Give it a break
-      shell: sleep 10
-      ignore_errors: True
-
-- hosts: all
   vars:
     ssh_user: ubuntu
   become: yes
