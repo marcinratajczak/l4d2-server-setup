@@ -1,0 +1,20 @@
+## /etc/systemd/system/l4d2.service
+[Unit]
+Description=Just another L4D2 Server
+
+After=network.target
+
+[Service]
+User={{ssh_user}}
+WorkingDirectory=/home/{{ssh_user}}/Steam/L4D2-server
+Environment="LD_LIBRARY_PATH=/home/{{ssh_user}}/Steam/L4D2-server:/home/{{ssh_user}}/Steam/L4D2-server/bin"
+
+ExecStart=/home/{{ssh_user}}/Steam/L4D2-server/srcds_run -console -game left4dead2 -port 27020 +exec server.cfg +map c2m1_highway
+
+TimeoutStartSec=infinity
+Restart=always
+LimitNOFILE=4096
+
+[Install]
+WantedBy=multi-user.target
+## END OF FILE

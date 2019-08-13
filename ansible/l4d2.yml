@@ -219,10 +219,16 @@
     ssh_user: ubuntu
   become: yes
   become_method: sudo
-  become_user: "{{ssh_user}}"
   tasks:
-    - name: Run Left 4 Dead 2 Server
-      shell: './start_L4D2.sh'
-      args:
-        chdir: /home/{{ssh_user}}/Steam/L4D2-server/
+    - name: Upload l4d2.service
+      template: src=static_files/l4d2.service.j2 dest=/etc/systemd/system/l4d2.service owner=root group=root mode=0644
       ignore_errors: True
+
+    - name: force systemd to reread configs
+      systemd: daemon_reload=yes
+
+    - name: enable l4d2.service
+      systemd:
+        name: l4d2
+        state: started
+        enabled: True
