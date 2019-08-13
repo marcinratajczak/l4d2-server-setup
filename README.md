@@ -5,7 +5,7 @@
 Currently supports following cloud computing platforms:
 
 - Amazon Web Services (AWS)
-- Google Cloud Platform
+- Google Cloud Platform (GCP)
 - Microsoft Azure
 
 ## Technology stack
@@ -30,7 +30,7 @@ terraform apply [options] [dir-or-plan]
 
 ## Examples:
 
-Go to the `aws/` directory, adjust `variables.tf` to your setup and run:
+Go to the `aws` directory, adjust `variables.tf` to your setup and run:
 ```
 terraform init
 ```
