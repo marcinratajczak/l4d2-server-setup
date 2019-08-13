@@ -40,6 +40,15 @@ If you prefer, you can pass some parameters (e.g., ssh keys) when applying the c
 terraform apply -var 'public_key_path=~/.ssh/steam.pub' -var 'private_key_path=~/.ssh/steam.pem'
 ```
 
+## Contributing to this repository
+
+This side project is in MVP state, far from perfect.
+I welcome valuable contributions to this repository from anyone.
+
+## Authors
+
+Originally created by [Marcin Ratajczak](https://github.com/marcinratajczak)
+
 ## License
 
 Licensed under the GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
