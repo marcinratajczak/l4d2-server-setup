@@ -65,6 +65,8 @@
           - screen
           - python-pip
           - python-apt
+          - libxerces-c-dev:i386 
+          - gdb
 
 - hosts: all
   become: yes
@@ -184,6 +186,24 @@
   tasks:
     - name: Upload start_L4D2.sh
       copy: src=static_files/start_L4D2.sh dest=/home/{{ssh_user}}/Steam/L4D2-server/start_L4D2.sh owner={{ssh_user}} group={{ssh_user}} mode=0775
+      ignore_errors: True
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  vars:
+    ssh_user: ubuntu
+  tasks:
+    - name: Sets .steam folder
+      file: path=/home/{{ssh_user}}/.steam owner={{ssh_user}} group={{ssh_user}} state=directory mode=0775
+      ignore_errors: True
+
+    - name: Sets sdk32 folder
+      file: path=/home/{{ssh_user}}/.steam/sdk32 owner={{ssh_user}} group={{ssh_user}} state=directory mode=0775
+      ignore_errors: True
+      
+    - name: Copy steamclient.so
+      copy: remote_src=True src=/home/{{ssh_user}}/Steam/linux32/steamclient.so dest=/home/{{ssh_user}}/.steam/sdk32/steamclient.so
       ignore_errors: True
 
 - hosts: all
