@@ -4,9 +4,9 @@ Left 4 Dead 2 Server setup
 
 ## Technology stack
 
-HashiCorp Terraform
+HashiCorp Terraform [https://www.terraform.io/]
 
-Red Hat Ansible
+Red Hat Ansible [https://www.ansible.com/]
 
 
 ## License
