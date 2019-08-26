@@ -183,17 +183,6 @@
   become_method: sudo
   vars:
     ssh_user: ubuntu
-    port: 27020
-  tasks:
-    - name: Upload start_L4D2.sh
-      template: src=static_files/start_L4D2.j2 dest=/home/{{ssh_user}}/Steam/L4D2-server/start_L4D2.sh owner={{ssh_user}} group={{ssh_user}} mode=0775
-      ignore_errors: True
-
-- hosts: all
-  become: yes
-  become_method: sudo
-  vars:
-    ssh_user: ubuntu
   tasks:
     - name: Sets .steam folder
       file: path=/home/{{ssh_user}}/.steam owner={{ssh_user}} group={{ssh_user}} state=directory mode=0775
