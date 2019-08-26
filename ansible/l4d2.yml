@@ -169,7 +169,7 @@
   vars:
     hostname: "Newer Win"
     rcon_password: "{{ lookup('password', '/dev/null length=20 chars=ascii_letters') }}"
-    sv_contact: "nw@email.com"
+    sv_contact: "nw@example.com"
     ssh_user: ubuntu
   become: yes
   become_method: sudo

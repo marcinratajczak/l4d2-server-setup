@@ -3,7 +3,7 @@ hostname "{{ hostname | default(NW) }}"
 rcon_password {{ rcon_password }}
 
 // This states how players should contact you.  Use your email or website
-sv_contact {{ sv_contact | default("your@email.com") }}
+sv_contact {{ sv_contact | default("your@example.com") }}
 
 // Number of rounds to play (only versus)
 mp_roundlimit 2
