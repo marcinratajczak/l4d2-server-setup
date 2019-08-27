@@ -38,7 +38,7 @@ resource "google_compute_firewall" "default" {
 
   allow {
     protocol = "udp"
-    ports    = ["27020"]
+    ports    = ["${var.l4d2_port}"]
   }
 
   source_ranges = ["0.0.0.0/0"]
