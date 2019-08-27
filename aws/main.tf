@@ -43,8 +43,8 @@ resource "aws_security_group" "l4d2" {
   }
 
   ingress {
-    from_port   = 27020
-    to_port     = 27020
+    from_port   = "${var.l4d2_port}"
+    to_port     = "${var.l4d2_port}"
     protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
     description = "SteamCMD"
@@ -84,8 +84,8 @@ resource "aws_security_group" "l4d2" {
   }
 
   ingress {
-    from_port   = 27020
-    to_port     = 27020
+    from_port   = "${var.l4d2_port}"
+    to_port     = "${var.l4d2_port}"
     protocol    = "udp"
     ipv6_cidr_blocks = ["::/0"]
     description = "SteamCMD"

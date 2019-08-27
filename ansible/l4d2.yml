@@ -70,7 +70,7 @@
 
 - hosts: all
   vars:
-    port: 27020
+    l4d2_port: "27020"
   become: yes
   become_method: sudo
   tasks:
@@ -95,7 +95,7 @@
       ignore_errors: True
 
     - name: UFW allow SteamCMD
-      ufw: rule=allow port={{port}} proto=any
+      ufw: rule=allow port={{l4d2_port}} proto=any
       ignore_errors: True
 
     - name: UFW enable
@@ -202,7 +202,7 @@
 - hosts: all
   vars:
     ssh_user: ubuntu
-    port: 27020
+    l4d2_port: 27020
   become: yes
   become_method: sudo
   tasks:
