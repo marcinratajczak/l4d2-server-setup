@@ -135,7 +135,7 @@
 
     - name: Download SteamCMD
       get_url:
-        url: {{url}}
+        url: "{{url}}"
         dest: /home/{{ssh_user}}/Steam/steamcmd_linux.tar.gz
         mode: '0664'
 
