@@ -69,6 +69,8 @@
           - gdb
 
 - hosts: all
+  vars:
+    port: 27020
   become: yes
   become_method: sudo
   tasks:
@@ -93,7 +95,7 @@
       ignore_errors: True
 
     - name: UFW allow SteamCMD
-      ufw: rule=allow port=27020 proto=any
+      ufw: rule=allow port={{port}} proto=any
       ignore_errors: True
 
     - name: UFW enable
