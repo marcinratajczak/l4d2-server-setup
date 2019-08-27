@@ -137,7 +137,7 @@ resource "azurerm_network_security_group" "l4d2sg" {
         access                     = "Allow"
         protocol                   = "Udp"
         source_port_range          = "*"
-        destination_port_range     = "27020"
+        destination_port_range     = "${var.l4d2_port}"
         source_address_prefix      = "*"
         destination_address_prefix = "*"
     }
