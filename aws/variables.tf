@@ -47,7 +47,6 @@ variable "ssh_user" {
 }
 
 # L4D2
-
 variable "l4d2_port" {
   description = "Port number to connect to L4D2 server."
   default     = "27020"
