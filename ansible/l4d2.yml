@@ -127,6 +127,7 @@
   become_method: sudo
   vars:
     ssh_user: ubuntu
+    url: http://media.steampowered.com/installer/steamcmd_linux.tar.gz
   tasks:
     - name: Sets Steam folder
       file: path=/home/{{ssh_user}}/Steam owner={{ssh_user}} group={{ssh_user}} state=directory mode=0775
@@ -134,7 +135,7 @@
 
     - name: Download SteamCMD
       get_url:
-        url: http://media.steampowered.com/installer/steamcmd_linux.tar.gz
+        url: {{url}}
         dest: /home/{{ssh_user}}/Steam/steamcmd_linux.tar.gz
         mode: '0664'
 
