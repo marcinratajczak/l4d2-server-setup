@@ -23,6 +23,7 @@ variable "azure_resource_location" {
   description = "The Azure resource location to use."
   default     = "West Europe"
 }
+
 variable "azure_location" {
   description = "The Azure location to use."
   default     = "westeurope"
@@ -49,3 +50,4 @@ variable "l4d2_port" {
   description = "Port number to connect to L4D2 server."
   default     = "27020"
 }
+

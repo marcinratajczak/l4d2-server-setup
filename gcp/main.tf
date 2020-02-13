@@ -1,15 +1,14 @@
 // Configure the Google Cloud provider
 provider "google" {
- credentials = "${var.gcp_credentials_file}"
- project     = "${var.gcp_project}"
- region      = "${var.gcp_region}"
+  credentials = var.gcp_credentials_file
+  project     = var.gcp_project
+  region      = var.gcp_region
 }
 
 # Configure the gcp firewall
 resource "google_compute_firewall" "default" {
   name    = "l4d2-firewall"
   network = "default"
-
 
   allow {
     protocol = "tcp"
@@ -38,7 +37,7 @@ resource "google_compute_firewall" "default" {
 
   allow {
     protocol = "udp"
-    ports    = ["${var.l4d2_port}"]
+    ports    = [var.l4d2_port]
   }
 
   source_ranges = ["0.0.0.0/0"]
@@ -46,8 +45,8 @@ resource "google_compute_firewall" "default" {
 }
 
 resource "google_compute_firewall" "default-deny" {
-  name    = "l4d2-firewall-deny"
-  network = "default"
+  name     = "l4d2-firewall-deny"
+  network  = "default"
   priority = "2000"
 
   deny {
@@ -60,49 +59,50 @@ resource "google_compute_firewall" "default-deny" {
 
 // Terraform plugin for creating random ids
 resource "random_id" "instance_id" {
- byte_length = 8
+  byte_length = 8
 }
 
 // A single Google Cloud Engine instance
 resource "google_compute_instance" "default" {
- name         = "l4d2-vm-${random_id.instance_id.hex}"
- machine_type = "${var.gcp_machine_type}"
- zone         = "${var.gcp_zone}"
- tags         = ["l4d2","ssh"]
+  name         = "l4d2-vm-${random_id.instance_id.hex}"
+  machine_type = var.gcp_machine_type
+  zone         = var.gcp_zone
+  tags         = ["l4d2", "ssh"]
 
- boot_disk {
-   initialize_params {
-     image = "${var.gcp_image}"
-     size = "100"
-   }
- }
+  boot_disk {
+    initialize_params {
+      image = var.gcp_image
+      size  = "100"
+    }
+  }
 
- network_interface {
-   network = "default"
+  network_interface {
+    network = "default"
 
-   access_config {
-     // Include this section to give the VM an external ip address
-   }
- }
+    access_config {
+      // Include this section to give the VM an external ip address
+    }
+  }
 
-metadata = {
-   ssh-keys = "${var.ssh_user}:${file("${var.public_key_path}")}"
- }
+  metadata = {
+    ssh-keys = "${var.ssh_user}:${file(var.public_key_path)}"
+  }
 
-# Ansible
+  # Ansible
+  # Ansible
   provisioner "remote-exec" {
     inline = ["echo 'Hello World'"]
 
     connection {
       type        = "ssh"
-      user        = "${var.ssh_user}"
-      host        = "${google_compute_instance.default.network_interface.0.access_config.0.nat_ip}"
-      private_key = "${file("${var.private_key_path}")}"
+      user        = var.ssh_user
+      host        = google_compute_instance.default.network_interface[0].access_config[0].nat_ip
+      private_key = file(var.private_key_path)
     }
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i '${google_compute_instance.default.network_interface.0.access_config.0.nat_ip},' -u '${var.ssh_user}' --private-key ${var.private_key_path} ../ansible/l4d2.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
+    command = "ansible-playbook -i '${google_compute_instance.default.network_interface[0].access_config[0].nat_ip},' -u '${var.ssh_user}' --private-key ${var.private_key_path} ../ansible/l4d2.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
   }
+}
 
- }
