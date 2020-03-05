@@ -215,7 +215,6 @@ data "azurerm_public_ip" "l4d2" {
 
 resource "null_resource" "terraformvm" {
   # Ansible
-  # Ansible
   provisioner "remote-exec" {
     inline = ["echo 'Hello World'"]
 

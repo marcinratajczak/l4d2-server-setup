@@ -89,7 +89,6 @@ resource "google_compute_instance" "default" {
   }
 
   # Ansible
-  # Ansible
   provisioner "remote-exec" {
     inline = ["echo 'Hello World'"]
 

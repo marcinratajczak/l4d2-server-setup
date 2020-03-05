@@ -146,7 +146,6 @@ resource "aws_instance" "l4d2" {
   }
 
   # Ansible
-  # Ansible
   provisioner "remote-exec" {
     inline = ["echo 'Hello World'"]
 
