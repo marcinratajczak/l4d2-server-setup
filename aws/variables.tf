@@ -17,7 +17,7 @@ variable "aws_profile" {
 # https://cloud-images.ubuntu.com/locator/ec2/
 variable "aws_ec2_ami" {
   description = "The AWS AMI to use."
-  default     = "ami-06358f49b5839867c"
+  default     = "ami-0a8e758f5e873d1c1"
 }
 
 variable "aws_ec2_type" {
