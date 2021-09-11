@@ -17,7 +17,7 @@ variable "aws_profile" {
 # https://cloud-images.ubuntu.com/locator/ec2/
 variable "aws_ec2_ami" {
   description = "The AWS AMI to use."
-  default     = "ami-06358f49b5839867c"
+  default     = "ami-0a8e758f5e873d1c1"
 }
 
 variable "aws_ec2_type" {
@@ -33,12 +33,12 @@ variable "aws_ec2_key" {
 # SSH
 variable "public_key_path" {
   description = "Path to the public SSH key you want to bake into the instance."
-  default     = "~/.ssh/id_rsa.pub"
+  default     = "~/.ssh/steam.pub"
 }
 
 variable "private_key_path" {
   description = "Path to the private SSH key, used to access the instance."
-  default     = "~/.ssh/id_rsa"
+  default     = "~/.ssh/steam.pem"
 }
 
 variable "ssh_user" {

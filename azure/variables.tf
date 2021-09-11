@@ -32,12 +32,12 @@ variable "azure_location" {
 # SSH
 variable "public_key_path" {
   description = "Path to the public SSH key you want to bake into the instance."
-  default     = "~/.ssh/id_rsa.pub"
+  default     = "~/.ssh/steam.pub"
 }
 
 variable "private_key_path" {
   description = "Path to the private SSH key, used to access the instance."
-  default     = "~/.ssh/id_rsa"
+  default     = "~/.ssh/steam.pem"
 }
 
 variable "ssh_user" {
