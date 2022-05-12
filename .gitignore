@@ -33,3 +33,6 @@ override.tf.json
 
 # macOS Files
 .DS_Store
+
+# VSCode Local files
+.vscode/
